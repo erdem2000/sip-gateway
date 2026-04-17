@@ -1,0 +1,21 @@
+services:
+  asterisk:
+    container_name: asteriks
+    build:
+      context: ./asterisk
+      dockerfile: Dockerfile
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - EXTERNAL_IP=${EXTERNAL_IP}
+      - SIP_EXTEN_1=${SIP_EXTEN_1:-1000}
+      - SIP_PASSWORD_1=${SIP_PASSWORD_1}
+      - SIP_EXTEN_2=${SIP_EXTEN_2:-1001}
+      - SIP_PASSWORD_2=${SIP_PASSWORD_2}
+
+  sip-debug:
+    image: nicolaka/netshoot:latest
+    container_name: standalone-sip-debug
+    network_mode: host
+    profiles: ["helpers"]
+    command: ["/bin/sh", "-c", "sleep infinity"]

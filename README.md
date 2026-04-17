@@ -80,6 +80,10 @@ Deploy a lightweight SIP gateway in any region. It provides a **fixed IP**, **in
 </tr>
 </table>
 
+For an **end-to-end home lab** (ElevenLabs → Kamailio + RTPEngine → Asterisk → mobile softphone), use the [poc](./poc/) stack and [poc/README.md](./poc/README.md).
+
+For a **fully standalone Asterisk SIP server** (no Kamailio/RTPEngine dependency), use [asterisk-standalone](./asterisk-standalone/).
+
 ### Comparison
 
 | | Kamailio + RTPEngine | Asterisk B2BUA |
@@ -236,6 +240,12 @@ After deploying, configure the outbound trunk:
 
 ```
 sip-gateway/
+├── asterisk-standalone/         # Independent Asterisk SIP server (Docker)
+│   ├── README.md
+│   └── docker-compose.yml
+├── poc/                         # ElevenLabs → gateway → Asterisk → softphone (local POC)
+│   ├── README.md
+│   └── docker-compose.yml
 ├── kamailio-proxy/              # Kamailio + RTPEngine
 │   ├── docker/                  #   Docker Compose stack
 │   ├── terraform/               #   GCP infrastructure

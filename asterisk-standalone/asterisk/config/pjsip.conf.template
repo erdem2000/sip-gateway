@@ -1,0 +1,74 @@
+; Generated from template by entrypoint — placeholders: __EXTERNAL_IP__
+
+[global]
+type=global
+user_agent=Asterisk-Standalone-SIP
+
+[transport-udp-5060]
+type=transport
+protocol=udp
+bind=0.0.0.0:5060
+external_media_address=__EXTERNAL_IP__
+external_signaling_address=__EXTERNAL_IP__
+
+[transport-tcp-5060]
+type=transport
+protocol=tcp
+bind=0.0.0.0:5060
+external_media_address=__EXTERNAL_IP__
+external_signaling_address=__EXTERNAL_IP__
+
+; Softphone #1 (register as user __SIP_EXTEN_1__)
+[__SIP_EXTEN_1__-auth]
+type=auth
+auth_type=userpass
+password=__SIP_PASSWORD_1__
+username=__SIP_EXTEN_1__
+
+; AOR id must match extension (To user) so inbound REGISTER can resolve (res_pjsip_registrar).
+[__SIP_EXTEN_1__]
+type=aor
+max_contacts=5
+remove_existing=yes
+
+[__SIP_EXTEN_1__]
+type=endpoint
+; Do not pin endpoint transport so outbound requests can follow the registered contact
+; transport (UDP or TCP) for this extension.
+context=default
+auth=__SIP_EXTEN_1__-auth
+aors=__SIP_EXTEN_1__
+disallow=all
+allow=ulaw,alaw
+direct_media=no
+rtp_symmetric=yes
+force_rport=yes
+rewrite_contact=yes
+webrtc=no
+
+; Softphone #2 (register as user __SIP_EXTEN_2__)
+[__SIP_EXTEN_2__-auth]
+type=auth
+auth_type=userpass
+password=__SIP_PASSWORD_2__
+username=__SIP_EXTEN_2__
+
+[__SIP_EXTEN_2__]
+type=aor
+max_contacts=5
+remove_existing=yes
+
+[__SIP_EXTEN_2__]
+type=endpoint
+; Do not pin endpoint transport so outbound requests can follow the registered contact
+; transport (UDP or TCP) for this extension.
+context=default
+auth=__SIP_EXTEN_2__-auth
+aors=__SIP_EXTEN_2__
+disallow=all
+allow=ulaw,alaw
+direct_media=no
+rtp_symmetric=yes
+force_rport=yes
+rewrite_contact=yes
+webrtc=no
