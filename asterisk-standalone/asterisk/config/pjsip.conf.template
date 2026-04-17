@@ -10,6 +10,11 @@ protocol=udp
 bind=0.0.0.0:5060
 external_media_address=__EXTERNAL_IP__
 external_signaling_address=__EXTERNAL_IP__
+; Without local_net, PJSIP often omits external_media_address in SDP toward non-LAN peers,
+; which breaks cloud/LiveKit RTP paths (one-way audio: you hear them, they do not hear you).
+local_net=192.168.0.0/16
+local_net=10.0.0.0/8
+local_net=172.16.0.0/12
 
 [transport-tcp-5060]
 type=transport
